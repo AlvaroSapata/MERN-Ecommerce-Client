@@ -17,7 +17,7 @@
     
 }
 .nav-logo p{
-    /* color: #171717; */
+    color: var(--themeColorMain);
     font-size: 28px;
     font-weight: 600;
 }
@@ -69,7 +69,7 @@
 }
 .nav-login-cart img{
     width: 35px;
-    border: var(--textColorMain) 1px solid;
+    
 }
 .nav-cart-count{
     width: 18px;

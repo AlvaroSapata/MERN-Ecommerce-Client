@@ -1,37 +1,44 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../Context/auth.context.js"; // Importa el contexto de autenticación
+import { useNavigate } from "react-router-dom"; // Importa useNavigate desde react-router-dom
+import { loginService } from "../Context/auth.services.js"; // Importa el servicio de inicio de sesión
 import "./CSS/LoginSignup.css";
 
 const LoginSignup = () => {
-
+  const { authenticateUser } = useContext(AuthContext); // Usa el contexto de autenticación
+  const navigate = useNavigate(); // Utiliza useNavigate para manejar la navegación
+  const [errorMessage, setErrorMessage] = useState(""); // Estado para almacenar el mensaje de error
   const [state,setState] = useState("Login");
-  const [formData,setFormData] = useState({username:"",email:"",password:""});
+  const [credentials, setCredentials] = useState({username:"", email: "", password: "" });
 
-  const changeHandler = (e) => {
-    setFormData({...formData,[e.target.name]:e.target.value});
-    }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials({ ...credentials, [name]: value });
+  };
 
-  const login = async () => {
-    let dataObj;
-    await fetch('http://localhost:5005/auth/login', {
-      method: 'POST',
-      headers: {
-        Accept:'application/form-data',
-        'Content-Type':'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((resp) => resp.json())
-      .then((data) => {dataObj=data});
-      console.log(dataObj.authToken);
-      if (dataObj.success) {
-        localStorage.setItem('auth-token',dataObj.token);
-        window.location.replace("/");
+    const handleLogin = async (e) => {
+      e.preventDefault();
+      console.log("e",e,"credentials", credentials)
+      try {
+        // Llama al servicio de inicio de sesión para obtener el token de autenticación
+        const { authToken, message } = await loginService(credentials);
+        console.log(message)
+        if (message) {
+          // Si hay un mensaje de error, establece el mensaje de error en el estado
+          setErrorMessage(message);
+        } else {
+          // Si no hay mensaje de error, guarda el token de autenticación en localStorage
+          localStorage.setItem("authToken", authToken);
+          // Llama a la función authenticateUser para establecer el estado de autenticación en la aplicación
+          await authenticateUser();
+          setErrorMessage(""); // Limpia el mensaje de error
+          // Redirige al usuario a la página principal después de iniciar sesión correctamente
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Error during login:", error);
       }
-      else
-      {
-        alert(dataObj.errors)
-      }
-  }
+    };
 
   const signup = async () => {
     let dataObj;
@@ -41,7 +48,7 @@ const LoginSignup = () => {
         Accept:'application/form-data',
         'Content-Type':'application/json',
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(credentials),
     })
       .then((resp) => resp.json())
       .then((data) => {dataObj=data});
@@ -61,12 +68,12 @@ const LoginSignup = () => {
       <div className="loginsignup-container">
         <h1>{state}</h1>
         <div className="loginsignup-fields">
-          {state==="Sign Up"?<input type="text" placeholder="Your name" name="username" value={formData.username} onChange={changeHandler}/>:<></>}
-          <input type="email" placeholder="Email address" name="email" value={formData.email} onChange={changeHandler}/>
-          <input type="password" placeholder="Password" name="password" value={formData.password} onChange={changeHandler}/>
+          {state==="Sign Up"?<input type="text" placeholder="Your name" name="username" value={credentials.username} onChange={handleInputChange}/>:<></>}
+          <input type="email" placeholder="Email address" name="email" value={credentials.email} onChange={handleInputChange}/>
+          <input type="password" placeholder="Password" name="password" value={credentials.password} onChange={handleInputChange}/>
         </div>
 
-        <button onClick={()=>{state==="Login"?login():signup()}}>Continue</button>
+        <button onClick={(e)=>{state==="Login"?handleLogin(e):signup()}}>Continue</button>
 
         {state==="Login"?
         <p className="loginsignup-login">Create an account? <span onClick={()=>{setState("Sign Up")}}>Click here</span></p>

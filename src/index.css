@@ -18,6 +18,7 @@ body {
   --textColorSecondary: rgb(226, 227, 232);
   --themeColorMain: rgba(219, 26, 90, 1);
   --themeColorSecondary: #386fd2;
+  --gradient: linear-gradient(to right, white , transparent);
 }
 
 *{

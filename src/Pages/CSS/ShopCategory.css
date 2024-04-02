@@ -1,8 +1,12 @@
-.shopcategory-banner{
+.shopcategory-banner {
     display: block;
     margin: 30px auto;
     width: 80%;
+    background: linear-gradient(to bottom, transparent 40%, var(--themeColorMain) 100%);
+    border-radius: 10px;
+    border-bottom: var(--themeColorMain) solid 3px;
 }
+
 .shopcategory-indexSort{
     display: flex;
     margin: 0px 170px;
