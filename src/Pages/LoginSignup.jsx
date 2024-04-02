@@ -12,7 +12,7 @@ const LoginSignup = () => {
 
   const login = async () => {
     let dataObj;
-    await fetch('http://localhost:4000/login', {
+    await fetch('http://localhost:5005/auth/login', {
       method: 'POST',
       headers: {
         Accept:'application/form-data',
@@ -22,7 +22,7 @@ const LoginSignup = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {dataObj=data});
-      console.log(dataObj);
+      console.log(dataObj.authToken);
       if (dataObj.success) {
         localStorage.setItem('auth-token',dataObj.token);
         window.location.replace("/");
@@ -35,7 +35,7 @@ const LoginSignup = () => {
 
   const signup = async () => {
     let dataObj;
-    await fetch('http://localhost:4000/signup', {
+    await fetch('http://localhost:5005/auth/signup', {
       method: 'POST',
       headers: {
         Accept:'application/form-data',

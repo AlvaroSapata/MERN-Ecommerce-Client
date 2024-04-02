@@ -7,7 +7,7 @@
     margin: auto;
 }
 .popular h1{
-    color: #171717;
+    color: var(--textColorMain);
     font-size: 40px;
     font-weight: 600;
 }
@@ -15,7 +15,7 @@
     width: 150px;
     height: 4px;
     border-radius: 10px;
-    background: #252525;
+    background: var(--textColorMain);
 }
 .popular-item{
     margin-top: 40px;

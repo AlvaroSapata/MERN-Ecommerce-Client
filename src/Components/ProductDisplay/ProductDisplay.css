@@ -24,7 +24,7 @@
     flex-direction: column;
 }
 .productdisplay-right h1{
-    color: #3d3d3d;
+    color: var(--textColorMain);
     font-size: 30px;
     font-weight: 700;
 }
@@ -48,11 +48,11 @@
     text-decoration: line-through;
 }
 .productdisplay-right-price-new{
-    color: #ff4141;
+    color:var(--themeColorMain);
 }
 .productdisplay-right-size h1{
     margin-top: 30px;
-    color: #656565;
+    color: var(--textColorMain);
     font-size: 18px;
     font-weight: 600;
 }
@@ -63,7 +63,7 @@
 }
 .productdisplay-right-sizes div{
     padding: 16px 20px;
-    background: #fbfbfb;
+    background: var(--mainBgColor);
     border: 1px solid #ebebeb;
     border-radius: 3px;
     cursor: pointer;
@@ -74,7 +74,7 @@
     font-size: 16px;
     font-weight: 600;
     color: white;
-    background: #FF4141;
+    background: var(--themeColorMain);
     margin-bottom: 25px;
     border: none;
     outline: none;
