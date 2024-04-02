@@ -7,9 +7,9 @@ import { useParams } from 'react-router-dom'
 import { ShopContext } from '../Context/ShopContext'
 
 const Product = () => {
-  const {products} = useContext(ShopContext);
-  const {productId} = useParams();
-  const product = products.find((e)=>e.id === Number(productId));
+  const { products } = useContext(ShopContext);
+  const { productId } = useParams();
+  const product = products.find((product) => product._id === productId);
   return (
     <div>
       <Breadcrums product={product}/>
@@ -17,7 +17,8 @@ const Product = () => {
       <DescriptionBox/>
       <RelatedProducts/>
     </div>
-  )
+  );
 }
+
 
 export default Product
