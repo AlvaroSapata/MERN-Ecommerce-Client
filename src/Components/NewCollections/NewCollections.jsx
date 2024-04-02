@@ -14,7 +14,7 @@ const NewCollections = (props) => {
                 key={i}
                 name={item.name}
                 image={item.image}
-                // Mostrar solo old_price si old_price y new_price son iguales
+                // Mostrar solo new price si no hay descuento
                 new_price={item.new_price}
                 old_price={
                   item.old_price === item.new_price ? null : item.old_price
