@@ -28,6 +28,7 @@ function AuthWrapper(props) {
         // info del usuario
         setUser(response);
         console.log("response", response);
+        console.log("cart", response.cart)
       } else {
         // Si la respuesta no contiene datos de usuario válidos, el usuario no está autenticado
         setIsLoggedIn(false);

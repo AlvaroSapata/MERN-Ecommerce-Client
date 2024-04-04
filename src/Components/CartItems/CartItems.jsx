@@ -2,10 +2,11 @@ import React, { useContext } from "react";
 import "./CartItems.css";
 import cross_icon from "../Assets/cart_cross_icon.png";
 import { ShopContext } from "../../Context/ShopContext";
+import { getCartservice } from "../../Context/cart.services";
 
 const CartItems = () => {
-  const {products} = useContext(ShopContext);
-  const {cartItems,removeFromCart,getTotalCartAmount} = useContext(ShopContext);
+  const {cartItems} = useContext(ShopContext);
+  const {totalPrice, cart, quantity} = cartItems;
 
   return (
     <div className="cartitems">
@@ -18,32 +19,32 @@ const CartItems = () => {
         <p>Remove</p>
       </div>
       <hr />
-      {products.map((e)=>{
+      {cart.map((cartItem) => (
+        <div key={cartItem._id}>
+          <div className="cartitems-format-main cartitems-format">
+            <img className="cartitems-product-icon" src={cartItem.productId.image} alt="" />
+            <p>{cartItem.productId.name}</p>
+            <p>${cartItem.productId.new_price}</p>
+            <button className="cartitems-quantity">{cartItem.quantity}</button>
+            <p>${cartItem.productId.new_price * cartItem.quantity}</p>
+            <img className="cartitems-remove-icon" src={cross_icon} alt="" />
+          </div>
+          <hr />
+        </div>
+      ))}
 
-        if(cartItems[e.id]>0)
-        {
-          return  <div>
-                    <div className="cartitems-format-main cartitems-format">
-                      <img className="cartitems-product-icon" src={e.image} alt="" />
-                      <p cartitems-product-title>{e.name}</p>
-                      <p>${e.new_price}</p>
-                      <button className="cartitems-quantity">{cartItems[e.id]}</button>
-                      <p>${e.new_price*cartItems[e.id]}</p>
-                      <img onClick={()=>{removeFromCart(e.id)}} className="cartitems-remove-icon" src={cross_icon} alt="" />
-                    </div>
-                     <hr />
-                  </div>;
-        }
-        return null;
-      })}
-      
       <div className="cartitems-down">
         <div className="cartitems-total">
           <h1>Cart Totals</h1>
           <div>
             <div className="cartitems-total-item">
+              <p>Total Items</p>
+              <p>{quantity} Items</p>
+            </div>
+            <hr />
+            <div className="cartitems-total-item">
               <p>Subtotal</p>
-              <p>${getTotalCartAmount()}</p>
+              <p>${totalPrice}</p>
             </div>
             <hr />
             <div className="cartitems-total-item">
@@ -53,7 +54,7 @@ const CartItems = () => {
             <hr />
             <div className="cartitems-total-item">
               <h3>Total</h3>
-              <h3>${getTotalCartAmount()}</h3>
+              <h3>${totalPrice}</h3>
             </div>
           </div>
           <button>PROCEED TO CHECKOUT</button>
