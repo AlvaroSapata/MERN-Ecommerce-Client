@@ -73,13 +73,16 @@ const LoginSignup = () => {
         <h2>{state}</h2>
         <div className="loginsignup-fields">
           {state === "Sign Up" ? (
-            <input
-              type="text"
-              placeholder="Your name"
-              name="username"
-              value={credentials.username}
-              onChange={handleInputChange}
-            />
+            <div>
+            <label>Name:</label>
+              <input
+                type="text"
+                placeholder="Enter your name..."
+                name="username"
+                value={credentials.username}
+                onChange={handleInputChange}
+              />
+            </div>
           ) : (
             <></>
           )}
@@ -107,7 +110,7 @@ const LoginSignup = () => {
               state === "Login" ? handleLogin(e) : signup();
             }}
           >
-            Login
+            {state}
           </button>
         </div>
         {state === "Login" ? (
