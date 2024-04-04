@@ -36,4 +36,16 @@ service.post = async (url, data) => {
   return response.json();
 };
 
+service.patch = async (url, data) => {
+  const response = await fetch(service.baseURL + url, {
+    method: 'PATCH',
+    headers: {
+      ...service.interceptors.request({}).headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+};
+
 export default service;

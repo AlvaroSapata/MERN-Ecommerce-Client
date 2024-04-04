@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState,useContext } from "react";
+import React, { createContext, useEffect, useState, useContext } from "react";
 import { getCartservice, addCartService, getTotalCartService, pullCartService, deleteCartService } from "./cart.services";
 import { AuthContext } from "./auth.context";
 
@@ -33,9 +33,15 @@ const ShopContextProvider = (props) => {
     }
   }, [isLoggedIn]);
 
+  const updateCartItems = (updatedCartItems) => {
+    setCartItems(updatedCartItems);
+  };
+
   const contextValue = {
     products,
     cartItems,
+    updateCartItems, // Add updateCartItems function to context
+    setCartItems,
   };
 
   return (
@@ -44,7 +50,5 @@ const ShopContextProvider = (props) => {
     </ShopContext.Provider>
   );
 };
-
-
 
 export default ShopContextProvider;

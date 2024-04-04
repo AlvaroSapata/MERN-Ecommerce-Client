@@ -16,6 +16,7 @@ const addCartService = (productId) => {
   
   // PATCH /cart/:productId/pull -> pulls a product from the cart
   const pullCartService = (productId) => {
+    console.log(productId)
     return service.patch(`/cart/${productId}/pull`);
   };
   
@@ -24,9 +25,4 @@ const addCartService = (productId) => {
     return service.put("/cart/deleteall");
   };
 
-  //! NOT NEEDED ??
-  const getTotalCartService = () => {
-    return service.get("/cart/total");
-  };
-
-export { testCartService,getCartservice, addCartService, pullCartService, deleteCartService, getTotalCartService};
+export { testCartService,getCartservice, addCartService, pullCartService, deleteCartService};

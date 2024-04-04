@@ -12,6 +12,7 @@ const Navbar = () => {
   let [menu, setMenu] = useState("shop");
   const [cartQuantity, setCartQuantity] = useState(0);
   const { isLoggedIn, authenticateUser } = useContext(AuthContext);
+  const { cartItems } = useContext(ShopContext);
   const navigate = useNavigate();
 
   const menuRef = useRef();
@@ -37,19 +38,19 @@ const Navbar = () => {
   useEffect(() => {
     const fetchCartQuantity = async () => {
       try {
-        const response = await getCartservice();
-        setCartQuantity(response.quantity);
+        let newCartQuantity = 0;
+        if (isLoggedIn) {
+          const response = await getCartservice();
+          newCartQuantity = response.quantity;
+        }
+        setCartQuantity(newCartQuantity);
       } catch (error) {
         console.error("Error fetching cart quantity:", error);
       }
     };
 
-    if (isLoggedIn) {
-      fetchCartQuantity();
-    } else {
-      setCartQuantity(0);
-    }
-  }, [isLoggedIn]);
+    fetchCartQuantity();
+  }, [isLoggedIn, cartItems]);
 
   return (
     <div className="nav">
@@ -120,9 +121,15 @@ const Navbar = () => {
             <button>Login</button>
           </Link>
         )}
-        <Link to="/cart">
-          <img src={cart_icon} alt="cart" />
-        </Link>
+        {isLoggedIn ? (
+          <Link to="/cart">
+            <img src={cart_icon} alt="cart" />
+          </Link>
+        ) : (
+          <Link to="/login">
+            <img src={cart_icon} alt="cart" />
+          </Link>
+        )}
         <div className="nav-cart-count">{cartQuantity}</div>
       </div>
     </div>
