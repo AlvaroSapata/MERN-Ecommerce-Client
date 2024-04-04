@@ -11,6 +11,7 @@ const getCartservice = () => {
 
   // PATCH /cart/:productId/add -> adds a product to the cart
 const addCartService = (productId) => {
+  console.log(productId)
     return service.patch(`/cart/${productId}/add`);
   };
   

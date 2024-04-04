@@ -1,43 +1,63 @@
 import React, { useContext } from "react";
 import "./CartItems.css";
 import cross_icon from "../Assets/cart_cross_icon.png";
+import add_icon from "../Assets/cart_add_icon.svg";
 import { ShopContext } from "../../Context/ShopContext";
-import { pullCartService } from "../../Context/cart.services";
+import { pullCartService, addCartService } from "../../Context/cart.services";
 
 const CartItems = () => {
   const { cartItems, setCartItems } = useContext(ShopContext);
   const { totalPrice, cart, quantity } = cartItems;
 
-  const removeItem = async (productId) => {
+  const addItem = async (productId) => {
     try {
-      console.log(productId);
-      await pullCartService(productId); // Llamar al servicio para eliminar el producto del carrito
-      // Actualizar el estado del carrito eliminando el elemento
-      const updatedCart = cart.map(item =>
+      // Llamar al servicio para agregar el producto al carrito
+      await addCartService(productId);
+      // Actualizar el estado del carrito para reflejar los cambios
+      const updatedCart = cart.map((item) =>
         item.productId._id === productId
-          ? { ...item, quantity: item.quantity - 1 } // Reducir la cantidad del producto eliminado
+          ? { ...item, quantity: item.quantity + 1 }
           : item
-      ).filter(item => item.quantity > 0); // Eliminar el producto del carrito si la cantidad es cero
-  
-      // Calcular el nuevo precio total y la nueva cantidad
-      const newTotalPrice = updatedCart.reduce((total, item) => total + (item.productId.new_price * item.quantity), 0);
+      );
+      const newTotalPrice = updatedCart.reduce(
+        (total, item) => total + item.productId.new_price * item.quantity,
+        0
+      );
       const newQuantity = updatedCart.reduce((total, item) => total + item.quantity, 0);
-  
-      // Actualizar el estado del carrito con los nuevos valores
-      setCartItems(prevCartItems => ({
+      setCartItems((prevCartItems) => ({
         ...prevCartItems,
         cart: updatedCart,
         totalPrice: newTotalPrice,
-        quantity: newQuantity
+        quantity: newQuantity,
+      }));
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+    }
+  };
+
+  const removeItem = async (productId) => {
+    try {
+      await pullCartService(productId);
+      const updatedCart = cart
+        .map((item) =>
+          item.productId._id === productId ? { ...item, quantity: item.quantity - 1 } : item
+        )
+        .filter((item) => item.quantity > 0);
+      const newTotalPrice = updatedCart.reduce(
+        (total, item) => total + item.productId.new_price * item.quantity,
+        0
+      );
+      const newQuantity = updatedCart.reduce((total, item) => total + item.quantity, 0);
+      setCartItems((prevCartItems) => ({
+        ...prevCartItems,
+        cart: updatedCart,
+        totalPrice: newTotalPrice,
+        quantity: newQuantity,
       }));
     } catch (error) {
       console.error("Error removing item from cart:", error);
     }
   };
-  
-  
-  
-
 
   return (
     <div className="cartitems">
@@ -48,6 +68,7 @@ const CartItems = () => {
         <p>Quantity</p>
         <p>Total</p>
         <p>Remove</p>
+        <p>Add</p>
       </div>
       <hr />
       {cart.map((cartItem) => (
@@ -62,7 +83,13 @@ const CartItems = () => {
               className="cartitems-remove-icon"
               src={cross_icon}
               alt=""
-              onClick={() => removeItem(cartItem.productId._id)} // Call removeItem with the product ID
+              onClick={() => removeItem(cartItem.productId._id)}
+            />
+            <img
+              className="cartitems-add-icon"
+              src={add_icon}
+              alt=""
+              onClick={() => addItem(cartItem.productId._id)}
             />
           </div>
           <hr />
