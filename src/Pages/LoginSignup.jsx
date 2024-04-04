@@ -63,7 +63,7 @@ const LoginSignup = () => {
       localStorage.setItem("auth-token", dataObj.token);
       window.location.replace("/");
     } else {
-      alert(dataObj.errors);
+      setErrorMessage(dataObj.errors);
     }
   };
 
@@ -74,7 +74,7 @@ const LoginSignup = () => {
         <div className="loginsignup-fields">
           {state === "Sign Up" ? (
             <div>
-            <label>Name:</label>
+              <label>Name:</label>
               <input
                 type="text"
                 placeholder="Enter your name..."
@@ -95,7 +95,6 @@ const LoginSignup = () => {
             onChange={handleInputChange}
           />
           <label>Password:</label>
-
           <input
             type="password"
             placeholder="Enter your password..."
@@ -113,6 +112,8 @@ const LoginSignup = () => {
             {state}
           </button>
         </div>
+        {/* Muestra el mensaje de error si existe */}
+        {errorMessage && <small className="error-message">{errorMessage}</small>}
         {state === "Login" ? (
           <p className="loginsignup-login">
             Create an account?{" "}

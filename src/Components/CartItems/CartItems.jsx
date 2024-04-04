@@ -21,7 +21,8 @@ const CartItems = () => {
       // Obtener el producto recién agregado del carrito
       const addedProduct = updatedCartResponse.cart.find(
         (item) => item.productId._id === productId
-      );
+        );
+        console.log(addedProduct)
 
       // Actualizar el estado del carrito con el carrito completo actualizado
       setCartItems((prevCartItems) => ({
