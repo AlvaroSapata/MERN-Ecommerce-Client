@@ -130,7 +130,9 @@ const Navbar = () => {
             <img src={cart_icon} alt="cart" />
           </Link>
         )}
-        <div className="nav-cart-count">{cartQuantity}</div>
+        <div className="nav-cart-count">{cartQuantity > 0 ? cartQuantity : 0}</div>
+        <p>total: {cartItems.totalPrice}</p>
+
       </div>
     </div>
   );

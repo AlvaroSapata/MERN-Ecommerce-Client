@@ -1,29 +1,33 @@
 import service from "./config.services";
 
 const testCartService = () => {
-    return service.get("/cart/");
-  };
+  return service.get("/cart/");
+};
 
-  // GET /cart/userCart -> gets user cart, quantity of products and total price
+// GET /cart/userCart -> gets user cart, quantity of products and total price
 const getCartservice = () => {
-    return service.get("/cart/userCart");
-  };
+  return service.get("/cart/userCart");
+};
 
-  // PATCH /cart/:productId/add -> adds a product to the cart
+// PATCH /cart/:productId/add -> adds a product to the cart
 const addCartService = (productId) => {
-  console.log(productId)
-    return service.patch(`/cart/${productId}/add`);
-  };
-  
-  // PATCH /cart/:productId/pull -> pulls a product from the cart
-  const pullCartService = (productId) => {
-    console.log(productId)
-    return service.patch(`/cart/${productId}/pull`);
-  };
-  
-  // PUT /cart/deleteall -> deletes all products from the cart
-  const deleteCartService = () => {
-    return service.put("/cart/deleteall");
-  };
+  return service.patch(`/cart/${productId}/add`);
+};
 
-export { testCartService,getCartservice, addCartService, pullCartService, deleteCartService};
+// PATCH /cart/:productId/pull -> pulls a product from the cart
+const pullCartService = (productId) => {
+  return service.patch(`/cart/${productId}/pull`);
+};
+
+// PUT /cart/deleteall -> deletes all products from the cart
+const deleteCartService = () => {
+  return service.put("/cart/deleteall");
+};
+
+export {
+  testCartService,
+  getCartservice,
+  addCartService,
+  pullCartService,
+  deleteCartService,
+};
