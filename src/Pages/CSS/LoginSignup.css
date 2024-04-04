@@ -73,7 +73,7 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="number"],
-select,
+/* select, */
 textarea {
   background: var(--mainBgColor);
   border: none;

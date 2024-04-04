@@ -135,7 +135,7 @@ const Navbar = () => {
         <div className="nav-cart-count">
           {cartQuantity > 0 ? cartQuantity : 0}
         </div>
-        <p>total: {cartItems.totalPrice}</p>
+        {/* Esto es solo para checkear el contexto <p>total: {cartItems.totalPrice}</p> */}
       </div>
     </div>
   );

@@ -63,7 +63,7 @@ const ShopCategory = (props) => {
         <div className="shopcategory-sort">
           Sort by:
           <select value={sortBy} onChange={handleSortChange}>
-            <option value="">Select</option>
+            <option value="" disabled>Select</option>
             <option value="price">Price</option>
             <option value="creation">Creation Date</option>
           </select>
