@@ -8,7 +8,7 @@ import ShopCategory from "./Pages/ShopCategory";
 import women_banner from "./Components/Assets/banner_women.png";
 import men_banner from "./Components/Assets/banner_mens.png";
 import kid_banner from "./Components/Assets/banner_kids.png";
-import tshirt_banner from "./Components/Assets/banner-tshirt.png";
+// import tshirt_banner from "./Components/Assets/banner-tshirt.png";
 import LoginSignup from "./Pages/LoginSignup";
 
 function App() {

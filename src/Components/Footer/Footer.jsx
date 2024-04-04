@@ -3,8 +3,8 @@ import './Footer.css'
 
 import footer_logo from '../Assets/nav-logo-Image.svg'
 import instagram_icon from '../Assets/instagram.svg'
-import pintrest_icon from '../Assets/pintester_icon.png'
-import whatsapp_icon from '../Assets/whatsapp_icon.png'
+// import pintrest_icon from '../Assets/pintester_icon.png'
+// import whatsapp_icon from '../Assets/whatsapp_icon.png'
 
 const Footer = () => {
   return (
