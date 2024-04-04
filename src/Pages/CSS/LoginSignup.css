@@ -1,19 +1,20 @@
 .loginsignup{
     width: 100%;
     min-height: 90vh;
-    background: #fce3fe;
+    background: var(--mainBgColor);
     padding-top: 100px;
 }
 .loginsignup-container{
     width: 90%;
     max-width: 550px;
-    background: white;
+    background: var(--mainBgColor);
     margin: auto;
     padding: 30px 40px;
     box-sizing: border-box;
 }
-.loginsignup-container h1{
-    margin: 15px 0px;
+.loginsignup-container h2{
+    margin: 15px 0px 10px;
+    color: var(--themeColorMain);
 }
 .loginsignup-fields{
     display: flex;
@@ -32,15 +33,21 @@
     box-sizing: border-box;
 }
 .loginsignup-container button{
-    width: 100%;
-    height: 60px;
-    color: white;
-    background: #ff4141;
+    width: 80%;
+    height: 40px;
+    color: var(--textColorMain);
+    background: var(--themeColorMain);
     margin-top: 30px;
     border: none;
-    font-size: 22px;
+    font-size: 15px;
     font-weight: 500;
     cursor: pointer;
+    border-radius: 5px;
+}
+.btn-fixer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .loginsignup-login{
     margin-top: 20px;
@@ -49,7 +56,7 @@
     font-weight: 500;
 }
 .loginsignup-login span{
-    color: #ff4141;
+    color: var(--themeColorMain);
     font-weight: 600;
 }
 .loginsignup-agree{
@@ -61,6 +68,25 @@
     font-size: 15px;
     font-weight: 500;
 }
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  background: var(--mainBgColor);
+  border: none;
+  border-bottom: 1px solid var(--borderColor1);
+  padding: 1rem;
+  border-radius: 3px;
+  width: 100%;
+  color: var(--color-light);
+  outline: none;
+  font-size: 18px;
+  text-shadow: none !important;
+}
+
 @media(max-width: 600px){
     .loginsignup-container h1{
         font-size: 22px;

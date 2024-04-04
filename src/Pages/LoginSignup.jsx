@@ -70,7 +70,7 @@ const LoginSignup = () => {
   return (
     <div className="loginsignup">
       <div className="loginsignup-container">
-        <h1>{state}</h1>
+        <h2>{state}</h2>
         <div className="loginsignup-fields">
           {state === "Sign Up" ? (
             <input
@@ -83,30 +83,33 @@ const LoginSignup = () => {
           ) : (
             <></>
           )}
+          <label>Email:</label>
           <input
             type="email"
-            placeholder="Email address"
+            placeholder="Enter your email..."
             name="email"
             value={credentials.email}
             onChange={handleInputChange}
           />
+          <label>Password:</label>
+
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Enter your password..."
             name="password"
             value={credentials.password}
             onChange={handleInputChange}
           />
         </div>
-
-        <button
-          onClick={(e) => {
-            state === "Login" ? handleLogin(e) : signup();
-          }}
-        >
-          Continue
-        </button>
-
+        <div className="btn-fixer">
+          <button
+            onClick={(e) => {
+              state === "Login" ? handleLogin(e) : signup();
+            }}
+          >
+            Login
+          </button>
+        </div>
         {state === "Login" ? (
           <p className="loginsignup-login">
             Create an account?{" "}

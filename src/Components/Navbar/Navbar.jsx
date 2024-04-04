@@ -7,6 +7,8 @@ import { ShopContext } from "../../Context/ShopContext";
 import nav_dropdown from "../Assets/nav_dropdown.png";
 import { AuthContext } from "../../Context/auth.context";
 import { getCartservice } from "../../Context/cart.services";
+import loginIcon from "../Assets/login.svg";
+import logoutIcon from "../Assets//logout.svg";
 
 const Navbar = () => {
   let [menu, setMenu] = useState("shop");
@@ -115,10 +117,10 @@ const Navbar = () => {
       </ul>
       <div className="nav-login-cart">
         {isLoggedIn ? (
-          <button onClick={handleLogout}>Logout</button>
+          <img src={logoutIcon} alt="" onClick={handleLogout} />
         ) : (
           <Link to="/login" style={{ textDecoration: "none" }}>
-            <button>Login</button>
+            <img src={loginIcon} alt="" />
           </Link>
         )}
         {isLoggedIn ? (
@@ -130,9 +132,10 @@ const Navbar = () => {
             <img src={cart_icon} alt="cart" />
           </Link>
         )}
-        <div className="nav-cart-count">{cartQuantity > 0 ? cartQuantity : 0}</div>
+        <div className="nav-cart-count">
+          {cartQuantity > 0 ? cartQuantity : 0}
+        </div>
         <p>total: {cartItems.totalPrice}</p>
-
       </div>
     </div>
   );
