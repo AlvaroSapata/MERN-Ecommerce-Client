@@ -55,14 +55,16 @@ const ProductDisplay = (props) => {
     }
   };
 
+  const randomNumber = Math.floor(Math.random() * 100);
+
   return (
     <div className="productdisplay">
       <div className="productdisplay-left">
         <div className="productdisplay-img-list">
           <img src={product.image} alt="img" />
-          <img src={product.image} alt="img2" />
+          {/* <img src={product.image} alt="img2" />
           <img src={product.image} alt="img3" />
-          <img src={product.image} alt="img4" />
+          <img src={product.image} alt="img4" /> */}
         </div>
         <div className="productdisplay-img">
           <img
@@ -81,7 +83,7 @@ const ProductDisplay = (props) => {
           <img src={star_icon} alt="" />
           <img src={star_icon} alt="" />
           {/* <img src={star_dull_icon} alt="" /> */}
-          <p style={{ color: "white" }}>(122)</p>
+          <p style={{ color: "white" }}>{randomNumber}</p>
         </div>
         <div className="productdisplay-right-prices">
           {/* Mostrar solo el nuevo precio si el precio antiguo y el nuevo precio son iguales */}
