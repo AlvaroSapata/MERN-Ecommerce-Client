@@ -1,46 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import Hero from '../Components/Hero/Hero';
-import Popular from '../Components/Popular/Popular';
-import Offers from '../Components/Offers/Offers';
-import NewCollections from '../Components/NewCollections/NewCollections';
-import NewsLetter from '../Components/NewsLetter/NewsLetter';
+import React, { useEffect, useState } from "react";
+import Hero from "../Components/Hero/Hero";
+import Popular from "../Components/Popular/Popular";
+import Offers from "../Components/Offers/Offers";
+import NewCollections from "../Components/NewCollections/NewCollections";
+import NewsLetter from "../Components/NewsLetter/NewsLetter";
+import { getProductService } from "../Components/Utils/product.services";
+import { BounceLoader } from "react-spinners";
 
 const Shop = () => {
+  const [allproducts, setAllProducts] = useState([]);
   const [popular, setPopular] = useState([]);
   const [newcollection, setNewCollection] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchInfo = async () => {
+    setIsLoading(true);
+    try {
+      const data = await getProductService();
+      if (data.message === "No hay productos.") {
+        setAllProducts([]);
+        setPopular([]);
+        setNewCollection([]);
+      } else {
+        setAllProducts(data);
+        setPopular(data);
+        setNewCollection(data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchInfo = async () => {
-      try {
-        const popularResponse = await fetch('http://localhost:5005/products/all');
-        const newCollectionResponse = await fetch('http://localhost:5005/products/all');
-
-        if (!popularResponse.ok || !newCollectionResponse.ok) {
-          throw new Error('Failed to fetch data');
-        }
-
-        const popularData = await popularResponse.json();
-        const newCollectionData = await newCollectionResponse.json();
-
-        setPopular(popularData);
-        setNewCollection(newCollectionData);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      }
-    };
-
     fetchInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
+      {isLoading && (
+        <div className="spinner">
+          <BounceLoader color="#db1a5a" />
+        </div>
+      )}
+      {!isLoading && allproducts.length === 0 && (
+        <p>No hay productos disponibles.</p>
+      )}
       <Hero />
       <Popular data={popular} />
       <Offers />

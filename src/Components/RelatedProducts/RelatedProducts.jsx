@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./RelatedProducts.css";
 import Item from "../Item/Item";
+import { getProductService } from "../Utils/product.services";
 
 const RelatedProducts = ({ category, currentProductId }) => {
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -8,17 +9,14 @@ const RelatedProducts = ({ category, currentProductId }) => {
   useEffect(() => {
     const fetchInfo = async () => {
       try {
-        const allProducts = await fetch("http://localhost:5005/products/all");
-
-        if (!allProducts.ok) {
+        const allProducts = await getProductService();
+        if (!allProducts) {
           throw new Error("Failed to fetch data");
         }
 
-        const allProductsData = await allProducts.json();
-
         // Filtrar productos que coincidan con la categoría del producto actual
         // y excluyendo el producto actual por su id
-        const filteredProducts = allProductsData.filter(
+        const filteredProducts = allProducts.filter(
           (product) => product.category === category && product._id !== currentProductId
         );
 
@@ -39,7 +37,7 @@ const RelatedProducts = ({ category, currentProductId }) => {
         {relatedProducts.map((product) => (
           <Item
             key={product._id}
-            id={product.id}
+            id={product._id}
             name={product.name}
             image={product.image}
             new_price={product.new_price}

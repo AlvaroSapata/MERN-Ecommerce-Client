@@ -1,22 +1,36 @@
 import React, { createContext, useEffect, useState, useContext } from "react";
 import { getCartservice } from "./cart.services";
 import { AuthContext } from "./auth.context";
+import { getProductService } from "../Components/Utils/product.services";
 
 export const ShopContext = createContext(null);
 
 const ShopContextProvider = (props) => {
-  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const { isLoggedIn } = useContext(AuthContext);
-  const [cartItems, setCartItems] = useState({ cart: [], totalPrice: 0, quantity: 0 });
+  const [cartItems, setCartItems] = useState({
+    cart: [],
+    totalPrice: 0,
+    quantity: 0,
+  });
+
+  const fetchInfo = async () => {
+    try {
+      const data = await getProductService();
+      if (data.message === "No hay productos.") {
+        setAllProducts([]);
+      } else {
+        setAllProducts(data);
+        console.log("ShopContext Products:", data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
-    fetch("http://localhost:5005/products/all")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("ShopContext Products:", data);
-        setProducts(data);
-      })
-      .catch((error) => console.error("Error fetching products:", error));
+    fetchInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -24,19 +38,22 @@ const ShopContextProvider = (props) => {
       getCartservice()
         .then((response) => {
           if (response && response.cart) {
-            console.log("ShopContext Cart Items:", response.cart, response.totalPrice);
+            console.log(
+              "ShopContext Cart Items:",
+              response.cart,
+              response.totalPrice
+            );
             setCartItems(response);
           } else {
             console.log("No cart items found.");
             // Manejar el caso en que no hay ningún artículo en el carrito
             // Por ejemplo:
-             setCartItems({ cart: [], totalPrice: 0, quantity: 0 });
+            setCartItems({ cart: [], totalPrice: 0, quantity: 0 });
           }
         })
         .catch((error) => console.error("Error fetching cart items:", error));
     }
   }, [isLoggedIn]);
-  
 
   const updateCartItems = (updatedCartItems) => {
     setCartItems(updatedCartItems);
@@ -45,7 +62,7 @@ const ShopContextProvider = (props) => {
   };
 
   const contextValue = {
-    products,
+    allProducts,
     cartItems,
     updateCartItems,
     setCartItems,

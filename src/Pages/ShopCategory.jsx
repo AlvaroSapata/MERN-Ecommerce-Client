@@ -3,22 +3,29 @@ import "./CSS/ShopCategory.css";
 // import dropdown_icon from "../Components/Assets/dropdown_icon.png";
 import Item from "../Components/Item/Item";
 import { Link } from "react-router-dom";
+import { getProductService } from "../Components/Utils/product.services";
+import { BounceLoader } from "react-spinners";
 
 const ShopCategory = (props) => {
   const [allproducts, setAllProducts] = useState([]);
   const [sortBy, setSortBy] = useState(""); // Estado para almacenar la opción seleccionada
   const [sortOrder, setSortOrder] = useState("asc"); // Estado para almacenar el orden de clasificación
+  const [isLoading, setIsLoading] = useState(true);
 
-  const fetchInfo = () => {
-    fetch("http://localhost:5005/products/all")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        return res.json();
-      })
-      .then((data) => setAllProducts(data))
-      .catch((error) => console.error(error));
+  const fetchInfo = async () => {
+    setIsLoading(true);
+    try {
+      const data = await getProductService();
+      if (data.message === "No hay productos.") {
+        setAllProducts([]);
+      } else {
+        setAllProducts(data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -63,7 +70,9 @@ const ShopCategory = (props) => {
         <div className="shopcategory-sort">
           Sort by:
           <select value={sortBy} onChange={handleSortChange}>
-            <option value="" disabled>Select</option>
+            <option value="" disabled>
+              Select
+            </option>
             <option value="price">Price</option>
             <option value="creation">Creation Date</option>
           </select>
