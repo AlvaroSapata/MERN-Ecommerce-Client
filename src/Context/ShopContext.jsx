@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState, useContext } from "react";
 import { getCartservice } from "./cart.services";
 import { AuthContext } from "./auth.context";
-import { getProductService } from "../Components/Utils/product.services";
+import { getProductService } from "../Context/product.services"
 
 export const ShopContext = createContext(null);
 
@@ -17,6 +17,7 @@ const ShopContextProvider = (props) => {
   const fetchInfo = async () => {
     try {
       const data = await getProductService();
+      console.log(data)
       if (data.message === "No hay productos.") {
         setAllProducts([]);
       } else {

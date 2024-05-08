@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { verifyService } from "../Context/auth.services";
-import ScaleLoader from "react-spinners/ScaleLoader";
+import { BounceLoader } from "react-spinners";
 
 const AuthContext = createContext();
 
@@ -20,7 +20,7 @@ function AuthWrapper(props) {
   const authenticateUser = async () => {
     try {
       const response = await verifyService();
-      console.log("token chekeado");
+      console.log("token chekeado", isLoggedIn, user);
       // Verifica si la respuesta contiene datos de usuario válidos
       if (response && response._id && response.name && response.email) {
         // desde aquí el usuario está logueado
@@ -52,7 +52,7 @@ function AuthWrapper(props) {
   };
 
   if (isLoading) {
-    return <ScaleLoader color="#471971" className="myLoader" />;
+    return <BounceLoader color="#471971" className="myLoader" />;
 
     //3* la renderizacion de la app con el contexto pasado
   }

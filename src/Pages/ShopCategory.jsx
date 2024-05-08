@@ -3,7 +3,7 @@ import "./CSS/ShopCategory.css";
 // import dropdown_icon from "../Components/Assets/dropdown_icon.png";
 import Item from "../Components/Item/Item";
 import { Link } from "react-router-dom";
-import { getProductService } from "../Components/Utils/product.services";
+import { getProductService } from "../Context/product.services";
 import { BounceLoader } from "react-spinners";
 
 const ShopCategory = (props) => {

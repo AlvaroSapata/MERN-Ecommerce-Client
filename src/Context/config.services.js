@@ -17,11 +17,23 @@ service.interceptors = {
 };
 
 service.get = async (url) => {
+  console.log(service.baseURL + url)
   const response = await fetch(service.baseURL + url, {
     method: 'GET',
     headers: service.interceptors.request({}).headers,
   });
-  return response.json();
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  try {
+    return await response.json();
+  } catch (error) {
+    // Handle cases where response is not valid JSON
+    console.error("Error parsing JSON response:", error);
+    return null; // Or handle this case based on your requirements
+  }
 };
 
 service.post = async (url, data) => {
@@ -33,19 +45,66 @@ service.post = async (url, data) => {
     },
     body: JSON.stringify(data),
   });
-  return response.json();
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  try {
+    return await response.json();
+  } catch (error) {
+    // Handle cases where response is not valid JSON
+    console.error("Error parsing JSON response:", error);
+    return null; // Or handle this case based on your requirements
+  }
 };
 
-service.patch = async (url, data) => {
+service.put = async (url, data) => {
   const response = await fetch(service.baseURL + url, {
-    method: 'PATCH',
+    method: 'PUT',
     headers: {
       ...service.interceptors.request({}).headers,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   });
-  return response.json();
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  try {
+    return await response.json();
+  } catch (error) {
+    // Handle cases where response is not valid JSON
+    console.error("Error parsing JSON response:", error);
+    return null; // Or handle this case based on your requirements
+  }
 };
+
+service.delete = async (url) => {
+  const response = await fetch(service.baseURL + url, {
+    method: 'DELETE',
+    headers: service.interceptors.request({}).headers,
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  if (response.status === 204) {
+    // No content to parse, return success message or handle as needed
+    return { message: 'Product deleted successfully' };
+  }
+
+  try {
+    return await response.json();
+  } catch (error) {
+    // Handle cases where response is not valid JSON
+    console.error("Error parsing JSON response:", error);
+    return null; // Or handle this case based on your requirements
+  }
+};
+
 
 export default service;

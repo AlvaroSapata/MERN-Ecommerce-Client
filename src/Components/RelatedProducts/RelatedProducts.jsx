@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./RelatedProducts.css";
 import Item from "../Item/Item";
-import { getProductService } from "../Utils/product.services";
+import { getProductService } from "../../Context/product.services";
 
 const RelatedProducts = ({ category, currentProductId }) => {
   const [relatedProducts, setRelatedProducts] = useState([]);
