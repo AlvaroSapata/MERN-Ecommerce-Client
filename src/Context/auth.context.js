@@ -20,17 +20,18 @@ function AuthWrapper(props) {
   const authenticateUser = async () => {
     try {
       const response = await verifyService();
-      console.log("token chekeado", isLoggedIn, user);
+      console.log("token chekeado :","response :",response, "Logged :",isLoggedIn);
       // Verifica si la respuesta contiene datos de usuario válidos
-      if (response && response._id && response.name && response.email) {
+      if (response && response._id && response.email) {
         // desde aquí el usuario está logueado
         setIsLoggedIn(true);
         // info del usuario
         setUser(response);
-        console.log("response", response);
-        console.log("cart", response.cart)
+        console.log("response :", response);
+        console.log("cart :", response.cart)
       } else {
         // Si la respuesta no contiene datos de usuario válidos, el usuario no está autenticado
+        console.log("failed")
         setIsLoggedIn(false);
         setUser(null);
       }

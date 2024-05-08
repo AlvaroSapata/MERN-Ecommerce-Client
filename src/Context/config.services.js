@@ -17,9 +17,8 @@ service.interceptors = {
 };
 
 service.get = async (url) => {
-  console.log(service.baseURL + url)
   const response = await fetch(service.baseURL + url, {
-    method: 'GET',
+    method: "GET",
     headers: service.interceptors.request({}).headers,
   });
 
@@ -38,10 +37,10 @@ service.get = async (url) => {
 
 service.post = async (url, data) => {
   const response = await fetch(service.baseURL + url, {
-    method: 'POST',
+    method: "POST",
     headers: {
       ...service.interceptors.request({}).headers,
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   });
@@ -61,10 +60,10 @@ service.post = async (url, data) => {
 
 service.put = async (url, data) => {
   const response = await fetch(service.baseURL + url, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
       ...service.interceptors.request({}).headers,
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   });
@@ -84,7 +83,7 @@ service.put = async (url, data) => {
 
 service.delete = async (url) => {
   const response = await fetch(service.baseURL + url, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: service.interceptors.request({}).headers,
   });
 
@@ -94,7 +93,7 @@ service.delete = async (url) => {
 
   if (response.status === 204) {
     // No content to parse, return success message or handle as needed
-    return { message: 'Product deleted successfully' };
+    return { message: "Product deleted successfully" };
   }
 
   try {
@@ -105,6 +104,5 @@ service.delete = async (url) => {
     return null; // Or handle this case based on your requirements
   }
 };
-
 
 export default service;
