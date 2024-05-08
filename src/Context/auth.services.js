@@ -1,6 +1,7 @@
 import service from "./config.services";
 
 const signupService = (user) => {
+  console.log("calling SignupService", user);
   return service.post("/auth/signup", user);
 };
 

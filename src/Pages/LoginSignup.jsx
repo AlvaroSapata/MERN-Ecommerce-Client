@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../Context/auth.context.js"; // Importa el contexto de autenticación
 import { useNavigate } from "react-router-dom"; // Importa useNavigate desde react-router-dom
-import { loginService } from "../Context/auth.services.js"; // Importa el servicio de inicio de sesión
+import { loginService, signupService } from "../Context/auth.services.js"; // Importa el servicio de inicio de sesión
 import "./CSS/LoginSignup.css";
 
 const LoginSignup = () => {
@@ -45,25 +45,17 @@ const LoginSignup = () => {
   };
 
   const signup = async () => {
-    let dataObj;
-    await fetch("http://localhost:5005/auth/signup", {
-      method: "POST",
-      headers: {
-        Accept: "application/form-data",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        dataObj = data;
-      });
-
-    if (dataObj.success) {
-      localStorage.setItem("auth-token", dataObj.token);
-      window.location.replace("/");
-    } else {
-      setErrorMessage(dataObj.errors);
+    try {
+      const dataObj = await signupService(credentials); // Llama a signupService con las credenciales
+      console.log(dataObj)
+      if (dataObj.user) {
+        localStorage.setItem("auth-token", dataObj.token);
+        navigate("/");
+      } else {
+        setErrorMessage(dataObj.errors);
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
     }
   };
 
@@ -113,7 +105,9 @@ const LoginSignup = () => {
           </button>
         </div>
         {/* Muestra el mensaje de error si existe */}
-        {errorMessage && <small className="error-message">{errorMessage}</small>}
+        {errorMessage && (
+          <small className="error-message">{errorMessage}</small>
+        )}
         {state === "Login" ? (
           <p className="loginsignup-login">
             Create an account?{" "}
